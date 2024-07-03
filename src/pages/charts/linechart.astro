@@ -1,0 +1,16 @@
+---
+import LineChart from "../../components/charts/linechart";
+import Layout from "../../layouts/Page.astro";
+
+const seo = {
+  title: "Line Chart | Astro Palette",
+  description: "Astro Palette",
+};
+---
+
+<Layout {seo}>
+  <h1>Line Chart</h1>
+  <div>
+    <LineChart client:only="react" />
+  </div>
+</Layout>

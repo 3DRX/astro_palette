@@ -4,7 +4,8 @@ import { Container, Button } from "@components/odyssey-theme";
 import settings from "../../../config/settings.js";
 import { ThemeSwitcher } from "../../theme-switcher/theme-switcher";
 ---
-<script src="../../../utils/smoothScroll.js" />
+
+<script src="../../../utils/smoothScroll.js"></script>
 
 <Container>
   <section class="hero-section__section">
@@ -26,7 +27,7 @@ import { ThemeSwitcher } from "../../theme-switcher/theme-switcher";
         </Button>
         <Button href="#features" unelevated>Learn More</Button>
       </div>
-      {settings.enableThemeSwitcher && <ThemeSwitcher client:only />}
+      {settings.enableThemeSwitcher && <ThemeSwitcher client:only="lit" />}
     </div>
     <div class="hero-section__image">
       <picture>
