@@ -3,38 +3,25 @@ import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import { ResponsiveLine } from "@nivo/line";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 
 export default function Component() {
-  const [lineColor, setLineColor] = useState("#4338ca");
-  const [dataPointColor, setDataPointColor] = useState("#a5b4fc");
+  const [lineColor1, setLineColor1] = useState("#2563eb");
+  const [lineColor2, setLineColor2] = useState("#e11d48");
+  const [color1Copied, setColor1Copied] = useState(false);
+  const [color2Copied, setColor2Copied] = useState(false);
   const [lineWidth, setLineWidth] = useState(2);
   const [dataPointSize, setDataPointSize] = useState(6);
-  const data = [
-    { date: "2023-01-01", sales: 1000 },
-    { date: "2023-02-01", sales: 1200 },
-    { date: "2023-03-01", sales: 1500 },
-    { date: "2023-04-01", sales: 1800 },
-    { date: "2023-05-01", sales: 2000 },
-    { date: "2023-06-01", sales: 1900 },
-    { date: "2023-07-01", sales: 2100 },
-  ];
+
   return (
     <div className="flex flex-col items-center justify-center h-full">
-      <div className="w-full max-w-md grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div>
-          <Card>
-            <CardHeader>
-              <CardTitle>Sales Over Time</CardTitle>
-            </CardHeader>
+      <div className="w-full flex flex-row">
+        <div className="flex-1">
+          <Card className="border-none">
             <CardContent>
               <TimeseriesChart
-                className="aspect-[16/9]"
-                data={data}
-                type="line"
-                xAccessor={(d) => new Date(d.date)}
-                yAccessor={(d) => d.sales}
-                lineColor={lineColor}
-                dataPointColor={dataPointColor}
+                lineColor1={lineColor1}
+                lineColor2={lineColor2}
                 lineWidth={lineWidth}
                 dataPointSize={dataPointSize}
               />
@@ -42,29 +29,61 @@ export default function Component() {
           </Card>
         </div>
         <div>
-          <Card>
+          <Card className="border-none">
             <CardHeader>
               <CardTitle>Configure Chart Colors and Sizes</CardTitle>
             </CardHeader>
             <CardContent>
               <form className="grid gap-4">
                 <div>
-                  <Label htmlFor="lineColor">Line Color</Label>
-                  <Input
-                    id="lineColor"
-                    type="color"
-                    value={lineColor}
-                    onChange={(e) => setLineColor(e.target.value)}
-                  />
+                  <Label htmlFor="lineColor">Line Color 1</Label>
+                  <div className="flex flex-row">
+                    <Input
+                      id="lineColor1"
+                      type="color"
+                      value={lineColor1}
+                      onChange={(e) => {
+                        setLineColor1(e.target.value);
+                        setColor1Copied(false);
+                      }}
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigator.clipboard.writeText(lineColor1);
+                        setColor1Copied(true);
+                      }}
+                    >
+                      {color1Copied ? "Copied!" : "Copy"}
+                    </Button>
+                  </div>
                 </div>
                 <div>
-                  <Label htmlFor="dataPointColor">Data Point Color</Label>
-                  <Input
-                    id="dataPointColor"
-                    type="color"
-                    value={dataPointColor}
-                    onChange={(e) => setDataPointColor(e.target.value)}
-                  />
+                  <Label htmlFor="lineColor">Line Color 2</Label>
+                  <div className="flex flex-row">
+                    <Input
+                      id="lineColor2"
+                      type="color"
+                      value={lineColor2}
+                      onChange={(e) => {
+                        setLineColor2(e.target.value);
+                        setColor2Copied(false);
+                      }}
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigator.clipboard.writeText(lineColor2);
+                        setColor2Copied(true);
+                      }}
+                    >
+                      {color2Copied ? "Copied!" : "Copy"}
+                    </Button>
+                  </div>
                 </div>
                 <div>
                   <Label htmlFor="lineWidth">Line Width</Label>
@@ -99,7 +118,7 @@ export default function Component() {
 
 function TimeseriesChart(props) {
   return (
-    <div {...props}>
+    <div className="aspect-[16/9]">
       <ResponsiveLine
         data={[
           {
@@ -153,10 +172,11 @@ function TimeseriesChart(props) {
           tickValues: 5,
           tickPadding: 16,
         }}
-        colors={["#2563eb", "#e11d48"]}
-        pointSize={6}
+        colors={[props.lineColor1, props.lineColor2]}
+        pointSize={props.dataPointSize}
         useMesh={true}
         gridYValues={6}
+        lineWidth={props.lineWidth}
         theme={{
           tooltip: {
             chip: {
