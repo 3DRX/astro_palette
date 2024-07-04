@@ -1,0 +1,16 @@
+---
+import PieChart from "../../components/charts/piechart";
+import Layout from "../../layouts/Page.astro";
+
+const seo = {
+  title: "Pie Chart | Astro Palette",
+  description: "Astro Palette",
+};
+---
+
+<Layout {seo}>
+  <h1>Pie Chart</h1>
+  <div>
+    <PieChart client:only="react" />
+  </div>
+</Layout>

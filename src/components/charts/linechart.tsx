@@ -5,7 +5,7 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 
-export default function Component() {
+export default function LineChart() {
   const [lineColor1, setLineColor1] = useState("#2563eb");
   const [lineColor2, setLineColor2] = useState("#e11d48");
   const [color1Copied, setColor1Copied] = useState(false);

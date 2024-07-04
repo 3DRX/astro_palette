@@ -1,0 +1,16 @@
+---
+import BarChart from "../../components/charts/barchart";
+import Layout from "../../layouts/Page.astro";
+
+const seo = {
+  title: "Bar Chart | Astro Palette",
+  description: "Astro Palette",
+};
+---
+
+<Layout {seo}>
+  <h1>Bar Chart</h1>
+  <div>
+    <BarChart client:only="react" />
+  </div>
+</Layout>
